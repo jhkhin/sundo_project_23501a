@@ -10,6 +10,4 @@ public interface MapService {
     Observation CntObservationAll();
 
     List<Observation> findObservationAll(Observation ov);
-
-    Observation observationDetail(Observation observation);
 }

@@ -10,7 +10,4 @@ public interface MapDao {
     Observation CntObservationAll();
 
     List<Observation> findObservationAll(Observation ov);
-
-
-    Observation observationDetail(Observation observation);
 }

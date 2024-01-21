@@ -24,8 +24,4 @@ public class MapServiceImpl extends EgovAbstractServiceImpl implements MapServic
     public List<Observation> findObservationAll(Observation ov) {
         return mapDao.findObservationAll(ov);
     }
-
-    public Observation observationDetail(Observation observation){
-        return  mapDao.observationDetail(observation);
-    }
 }

@@ -40,5 +40,4 @@ public interface UserInfoDAO {
 	public int 					JmhInsertLoginLog(LoginLog loginLog);	//로그인이력
 	public int 					JmhInsertAccessLog(AccessLog accessLog);//접속이력
 
-	public int 					JmhUpdateUseFlagN(String user_id);
 }

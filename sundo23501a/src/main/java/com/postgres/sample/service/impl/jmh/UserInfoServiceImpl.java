@@ -23,13 +23,13 @@ import com.postgres.sample.dto.Organization;
 import com.postgres.sample.dto.UserInfo;
 import com.postgres.sample.service.impl.dao.jmh.BoardUserInfoDAO;
 import com.postgres.sample.service.impl.dao.jmh.UserInfoDAO;
-import com.postgres.sample.service.jmh.JmhUserInfoService;
+import com.postgres.sample.service.jmh.UserInfoService;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class JmhUserInfoServiceImpl extends EgovAbstractServiceImpl implements JmhUserInfoService {// implements UserInfoService
+public class UserInfoServiceImpl extends EgovAbstractServiceImpl implements UserInfoService {// implements UserInfoService
 
 	private final UserInfoDAO 		userInfoDAO;
 	private final BoardUserInfoDAO 	boardUserInfoDAO;

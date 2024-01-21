@@ -9,7 +9,7 @@ import com.postgres.sample.dto.LoginLog;
 import com.postgres.sample.dto.Organization;
 import com.postgres.sample.dto.UserInfo;
 
-public interface JmhUserInfoService {
+public interface UserInfoService {
 	
 	public List<Code>			codeList(Code code);					//분류 코드
 
