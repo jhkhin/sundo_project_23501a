@@ -594,7 +594,7 @@ public class HijController {
 		    mv.addObject("rainFallStat", rainFallStat);
 		    
 			System.out.println("---- 관측소 - 통계 - 강우량 정보 목록(rainFallChartListR) END-----");
-			//insertAccessLog(request, model);
+			insertAccessLog(request, model);
 			
 			return mv;
 		}
@@ -625,6 +625,64 @@ public class HijController {
 			
 			return rainFallStat;
 		}
-       
+
+       //--------------------------------------------------------------------------------------  
+       // 5. 관측소 - 통계 - 우량 정보
+       //--------------------------------------------------------------------------------------
+		@ResponseBody
+		@GetMapping("/time_chart_list_F")
+		public ModelAndView rainFallChartListF(Flow flow, HttpServletRequest request, Model model){
+			System.out.println("---- 관측소 - 통계 - 우량정보 목록(rainFallChartListF) START-----");
+			
+			List<Flow> flowYearList = hs.flowYearList(); // year 리스트			
+			if(flow.getObserve_year() == null) {
+				System.out.println("1.년도:null");
+				System.out.println("1.river_code:"+flow.getRiver_code());
+				flow.setObserve_year(flowYearList.get(0).getObserve_year());
+			}else {
+				System.out.println("2.년도:"+flow.getObserve_year());
+			System.out.println("2.river_code:"+flow.getRiver_code());
+			}
+			System.out.println("3.년도:"+flow.getObserve_year());
+			List<Flow> flowList = hs.flowList(flow);
+			
+			System.out.println("flowList size:"+flowList.size());
+			
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("/system2/observation_sys/time_chart_list_F"); // 뷰의 이름
+			mv.addObject("year", flowList.get(0).getObserve_year());
+			mv.addObject("flowList", flowList);
+			mv.addObject("flowYearList", flowYearList);
+			
+			System.out.println("---- 관측소 - 통계 - 우량정보 목록(rainFallChartListF) END-----");
+			insertAccessLog(request, model);
+			
+			return mv;
+		}
+
+       //검색
+       @ResponseBody
+       @GetMapping("/time_chart_search_F")
+       public List<Flow> rainFallChartSearchF(Flow flow, HttpServletRequest request, Model model){
+    	   System.out.println("---- 관측소 - 통계 - 우량 정보 검색(rainFallChartSearchF) START-----");
+		
+    	   List<Flow> flowYearList = hs.flowYearList(); // year 리스트
+    	   if(flow.getObserve_year() == null) {
+				System.out.println("1.년도:null");
+				System.out.println("1.river_code:"+flow.getRiver_code());
+		        flow.setObserve_year(flowYearList.get(0).getObserve_year());
+			}else {
+				System.out.println("2.년도:"+flow.getObserve_year());
+				System.out.println("2.river_code:"+flow.getRiver_code());
+			}
+    	   	System.out.println("3.년도:"+flow.getObserve_year());
+			List<Flow> flowList = hs.flowList(flow);
+			
+	    
+			System.out.println("---- 관측소 - 통계 - 우량 정보 검색(rainFallChartSearchF) END-----");
+			insertAccessLog(request, model);
+			
+			return flowList;
+		}
 }
 

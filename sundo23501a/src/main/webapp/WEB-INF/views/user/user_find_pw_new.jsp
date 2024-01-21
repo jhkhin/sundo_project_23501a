@@ -116,9 +116,9 @@
 
 <main class="form-signin w-100 m-auto">
 	<div class="login-wrapper">
-		<h2>PMS <span class="text-secondary">비밀번호 찾기</span></h2>
-		<h1 class="h6 mb-2 fw-normal">Project Management System</h1>
-		<p class="text-primary">프로젝트 관리 시스템</p>
+		<h2><span class="text-secondary">비밀번호 찾기</span></h2>
+		<h1 class="h6 mb-2 fw-normal">관리 시스템</h1>
+		<p class="text-primary">한강 수자원관리 종합플랫폼</p>
 				
 		<form method="post" id="login-form" name="frm">
 			<input type="hidden" name="user_id" id="user_id" value="${user_id }">

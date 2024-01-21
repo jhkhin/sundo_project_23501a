@@ -33,25 +33,6 @@ public class JmhUserInfoServiceImpl extends EgovAbstractServiceImpl implements J
 
 	private final UserInfoDAO 		userInfoDAO;
 	private final BoardUserInfoDAO 	boardUserInfoDAO;
-
-	//--------------------------------------------------------------------------------------
-	//---------로그
-	//--------------------------------------------------------------------------------------
-	@Override
-	public int InsertLoginLog(LoginLog loginLog) {
-		System.out.println("UserInfoServiceImpl InsertLoginLog Start..");
-		int result = userInfoDAO.JmhInsertLoginLog(loginLog);
-		System.out.println("result:"+result);
-		return result;
-	}
-
-	@Override
-	public int InsertAccessLog(AccessLog accessLog) {
-		System.out.println("UserInfoServiceImpl InsertAccessLog Start..");
-		int result = userInfoDAO.JmhInsertAccessLog(accessLog);
-		System.out.println("result:"+result);
-		return result;
-	}
   
 	//--------------------------------------------------------------------------------------	
 	//사용자 로그인 체크 1 (ID/PW)
@@ -158,7 +139,40 @@ public class JmhUserInfoServiceImpl extends EgovAbstractServiceImpl implements J
 		//-------------------------------------------------	
 		return result;
 	}
-			
+	
+	
+	//--------------------------------------------------------------------------------------
+	//---------로그
+	//--------------------------------------------------------------------------------------
+	@Override
+	public int InsertLoginLog(LoginLog loginLog) {
+		System.out.println("UserInfoServiceImpl InsertLoginLog Start..");
+		int result = userInfoDAO.JmhInsertLoginLog(loginLog);
+		System.out.println("result:"+result);
+		return result;
+	}
+
+	@Override
+	public int InsertAccessLog(AccessLog accessLog) {
+		System.out.println("UserInfoServiceImpl InsertAccessLog Start..");
+		int result = userInfoDAO.JmhInsertAccessLog(accessLog);
+		System.out.println("result:"+result);
+		return result;
+	}
+	
+	
+	//--------------------------------------------------------------------------------------
+	//---------5회 비밀번호 실패시 접속 제한
+	//--------------------------------------------------------------------------------------
+	@Override
+	public int JmhUpdateUseFlagN(String user_id) {
+		System.out.println("UserInfoServiceImpl JmhUpdateUseFlagN Start..");
+		int result = userInfoDAO.JmhUpdateUseFlagN(user_id);
+		System.out.println("result:"+result);
+		return result;
+	}
+
+	
 	//##################
 	// 사용자 관리
 	//##################	
@@ -274,5 +288,7 @@ public class JmhUserInfoServiceImpl extends EgovAbstractServiceImpl implements J
 		System.out.println("UserInfoServiceImpl deleteBoard END...");
 		return resultCount;
 	}
+
+	
 
 }

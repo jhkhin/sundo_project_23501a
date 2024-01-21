@@ -40,24 +40,6 @@
 		And	   use_flag = 'Y'
 	</select>
 	
-	<insert id="JmhInsertLoginLog" parameterType="LoginLog">
-		<selectKey resultType="int" keyProperty="log_no" order="BEFORE">
-        	SELECT COALESCE(MAX(log_no),0)+1 FROM LOGIN_LOG
-    	</selectKey>
-		INSERT INTO 
-		LOGIN_LOG(log_no, user_id, login_datetime, ip, create_datetime)
-		VALUES (#{log_no}, #{user_id}, NOW(), #{ip}, NOW())
-	</insert>
-
-	<insert id="JmhInsertAccessLog" parameterType="AccessLog">
-		<selectKey resultType="int" keyProperty="log_no" order="BEFORE">
-        	SELECT COALESCE(MAX(log_no),0)+1 FROM ACCESS_LOG
-    	</selectKey>
-		INSERT INTO 
-		ACCESS_LOG(log_no, program_url, user_id, access_datetime, ip, create_datetime)
-		VALUES (#{log_no}, #{program_url}, #{user_id}, NOW(), #{ip}, NOW())
-	</insert>
-
 
 	<!-- 기간명 가져오기 -->
 	<select id="JmhOrgList" resultType="Organization">
@@ -98,11 +80,11 @@
 		Select *
 		From   user_info
 		Where  user_name   = #{user_name}
-		And    user_number = #{user_number}
+		And    user_tel = #{user_tel}
 	</select>
 	
 	<!-- 비밀번호 업데이트 -->
- 	<update id="pwUpdate" parameterType="hashmap">
+ 	<update id="updatePw" parameterType="hashmap">
 		Update user_info
 		Set    user_pw = #{user_pw}
 		where  user_id = #{user_id}
@@ -119,6 +101,36 @@
 	            ,org_code   = #{org_code}
 	            ,user_department = #{user_department}
 	            ,user_position = #{user_position}
+	            ,modify_datetime = now()
+        WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 로그인 이력 -->
+	<insert id="JmhInsertLoginLog" parameterType="LoginLog">
+		<selectKey resultType="int" keyProperty="log_no" order="BEFORE">
+        	SELECT COALESCE(MAX(log_no),0)+1 FROM LOGIN_LOG
+    	</selectKey>
+		INSERT INTO 
+		LOGIN_LOG(log_no, user_id, login_datetime, ip, create_datetime)
+		VALUES (#{log_no}, #{user_id}, NOW(), #{ip}, NOW())
+	</insert>
+
+	<!-- 접속 이력 -->
+	<insert id="JmhInsertAccessLog" parameterType="AccessLog">
+		<selectKey resultType="int" keyProperty="log_no" order="BEFORE">
+        	SELECT COALESCE(MAX(log_no),0)+1 FROM ACCESS_LOG
+    	</selectKey>
+		INSERT INTO 
+		ACCESS_LOG(log_no, program_url, user_id, access_datetime, ip, create_datetime)
+		VALUES (#{log_no}, #{program_url}, #{user_id}, NOW(), #{ip}, NOW())
+	</insert>
+
+	
+	<!-- 5회 비밀번호 오류시 접속 제한 -->
+	<update id="JmhUpdateUseFlagN" parameterType="String">
+        UPDATE user_info
+        SET
+				use_flag = 'N'
 	            ,modify_datetime = now()
         WHERE user_id = #{user_id}
 	</update>

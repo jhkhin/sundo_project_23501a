@@ -25,15 +25,16 @@ public interface JmhUserInfoService {
 	UserInfo           			userFindId(UserInfo userInfo);
 	int                			updateUser(UserInfo userInfo);
 
-	
+	public int 					InsertLoginLog(LoginLog loginLog);		//로그인 이력
+	public int 					InsertAccessLog(AccessLog accessLog);	//접속 이력
+
+	public int 					JmhUpdateUseFlagN(String user_id);		//비밀번호 5회 오류시 접속제한
+
+	//사용자 관리
 	public int 					totalCount(UserInfo userInfo);	//총문서수
 	public List<UserInfo> 		boardList(UserInfo userInfo);	//목록
 	int 						insertBoard(UserInfo userInfo);	//등록
 	UserInfo 					selectBoard(UserInfo userInfo);	//조회
 	int 						updateBoard(UserInfo userInfo);	//수정
 	int 						deleteBoard(UserInfo userInfo);	//삭제
-	
-	public int 					InsertLoginLog(LoginLog loginLog);
-	public int 					InsertAccessLog(AccessLog accessLog);
-
 }

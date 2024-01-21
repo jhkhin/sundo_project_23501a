@@ -68,6 +68,8 @@ public class JmhController {
 	private final JmhAccessLogService alogService; 	//접속 이력
 	private final JmhLoginLogService llogService; 	//로그인 이력
 	
+	private int loginFailCount = 0;
+	
 	// SMTP(Send Mail Transport protocol) 메일 전송 객체
 	private final  JavaMailSender mailSender;
 
@@ -207,8 +209,16 @@ public class JmhController {
 	@RequestMapping(value = "user_login")
 	public String userLogin(Model model) {
 		System.out.println("JmhController userLogin Start..");
-	
-		return "user/user_login";
+		loginFailCount = 0;
+		System.out.println("초기화 loginFailCount="+loginFailCount);
+		return "/user/user_login";
+	}
+	// 로그인실패시 재시도 호출
+	@RequestMapping(value = "/user_relogin")
+	public String userReLogin(Model model) {
+		System.out.println("JmhController userReLogin Start..");
+		
+		return "/user/user_login";
 	}
 	//--------------------------------------------------------------------------------------		
 	// 인터셉터 체크(preHandler -> Controller)
@@ -243,15 +253,27 @@ public class JmhController {
 			return "forward:/user_login";
 		} else if (userInfoDTO == null) {
 			System.out.println("ID or PW 틀림");
-			model.addAttribute("pwMsgBox", "아이디 또는 비밀번호를 확인해주세요.");
-			return "forward:/user_login";
+			loginFailCount++;
+			System.out.println("loginFailCount="+loginFailCount);
+			if(loginFailCount >= 5) {
+				//use_flag="N"으로 접속제한처리
+				//---------------------------------------------------------------
+				int result = uiService.JmhUpdateUseFlagN(userInfo.getUser_id());
+				//---------------------------------------------------------------
+				model.addAttribute("pwMsgBox", "5회 이상 비밀번호 오류로 해당 계정 접속이 제한되었습니다.<br>관리자에게 문의하세요.");
+				return "forward:/user_relogin";
+			}else {
+				model.addAttribute("pwMsgBox", "아이디 또는 비밀번호를 확인해주세요.<br>5회 이상 비밀번호 오류시 해당 계정 접속을 제한합니다.<br>(로그인 실패 : " + loginFailCount + "회)");
+				return "forward:/user_relogin";
+			}
 		} else if (userInfoDTO != null && userInfoDTO2 == null) {
-			System.out.println("시스템 권한이 맞지 않음");
+			System.out.println("시스템 권한이 맞지 않음");			
+			System.out.println("loginFailCount="+loginFailCount);
 			model.addAttribute("pwMsgBox", "권한을 확인해주세요.");
-			return "forward:/user_login";
+			return "forward:/user_relogin";
 		} else if (userInfoDTO != null && userInfoDTO2 != null && userInfoDTO3 == null) {
 			System.out.println("사용여부가 Y가 아님");
-			model.addAttribute("pwMsgBox", "사용승인이 필요합니다. 관리자에게 사용여부를 확인해주세요.");
+			model.addAttribute("pwMsgBox", "접속이 제한되었습니다. 사용승인이 필요합니다.<br>관리자에게 사용여부를 확인해주세요.");
 			return "forward:/user_login";
 		} else {
 			System.out.println("user_login_check userInfo exists");

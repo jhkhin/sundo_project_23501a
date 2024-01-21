@@ -40,6 +40,23 @@ public class Observation{
 	private String  observe_type_name;
 	private String	currentPage;
 
+
+	private double waterLevel_record;
+	private double rainfall_record;
+	private double flow_record;
+
+
+
+
+
+//	private String 		river_code;
+//	private String 		river_name;
+	private String 		river_addr;
+	private String 		river_detail_addr;
+//	private Double 		latitude;
+//	private Double 		longitude;
+
+
 	//페이징작업
 	private String rn;
 	private String search;   	private String keyword;

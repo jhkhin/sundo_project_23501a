@@ -14,13 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
 
 @Controller
 @RequiredArgsConstructor
@@ -82,6 +81,22 @@ public class LkhMapController {
 
         return response;
     }
+
+
+    @ResponseBody
+    @GetMapping("/realTimeObservationDetail")
+    public Observation observationDetail(@RequestParam String river_code, HttpServletRequest request, Model model) {
+        System.out.println("야발");
+        System.out.println(river_code);
+
+        Observation observation = new Observation();
+        observation.setRiver_code(river_code);
+        Observation ob = mapService.observationDetail(observation);
+        insertAccessLog(request, model); //접속이력
+
+        return ob;
+    }
+
 
     @ResponseBody
     @GetMapping("/layerlist")

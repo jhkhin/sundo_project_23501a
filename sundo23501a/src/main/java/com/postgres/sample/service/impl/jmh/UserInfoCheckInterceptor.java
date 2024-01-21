@@ -45,6 +45,7 @@ public class UserInfoCheckInterceptor extends EgovAbstractServiceImpl implements
 		
 		if(userInfo == null) {
 		  System.out.println("preHandle userInfo is no exists");
+		  System.out.println("preHandle RequestURI="+request.getRequestURI());
 		  response.sendRedirect("/user_login");
 		  return false;   // 컨트롤러 진행 x
 		} else {

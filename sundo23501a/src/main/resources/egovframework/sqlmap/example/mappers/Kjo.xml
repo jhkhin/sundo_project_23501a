@@ -221,7 +221,7 @@
                 select wr.facility_category,wr.facility_code,wr.facility_addr,oz.org_area_name,
                        cr.firstdate, org.org_name, (select max(doc_no) from check_report where facility_code = wr.facility_code) as doc_no
                 from water_resources wr
-                         left outer join (select distinct to_char(max(modify_datetime),'yyyy-MM-dd') as firstdate,
+                         left outer join (select distinct to_char(max(check_date),'yyyy-MM-dd') as firstdate,
                                                           facility_code
                                           from check_report
                                           group by facility_code)cr
@@ -245,7 +245,7 @@
         select wr.facility_category,wr.facility_code,wr.facility_addr,oz.org_area_name,
         cr.firstdate,cr.check_result,cr.user_id, org.org_name
         from water_resources wr
-        left outer join (select distinct to_char(max(modify_datetime),'yyyy-MM-dd') as firstdate,
+        left outer join (select distinct to_char(max(check_date),'yyyy-MM-dd') as firstdate,
         facility_code ,check_result ,user_id
         from check_report
         group by facility_code,check_result,user_id)cr
@@ -294,7 +294,7 @@
         select wr.facility_category,wr.facility_code,wr.facility_addr,oz.org_area_name,
         cr.firstdate, org.org_name, (select max(doc_no) from check_report where facility_code = wr.facility_code) as doc_no
         from water_resources wr
-        left outer join (select distinct to_char(max(modify_datetime),'yyyy-MM-dd') as firstdate,
+        left outer join (select distinct to_char(max(check_date),'yyyy-MM-dd') as firstdate,
         facility_code
         from check_report
         group by facility_code)cr
@@ -400,7 +400,7 @@
 
     <select id="findCheckReportByDocNo" parameterType="checkReport" resultType="checkReport">
         select cr.facility_code,wr.facility_category,cd.cate_name, cr.check_result,cr.spec_memo, cr.doc_no, cr.user_id,
-               to_char(cr.modify_datetime,'yyyy-MM-dd') as modify_datetime, cr.weather, ui.user_department, ui.user_position, ui.user_name
+               to_char(cr.check_date,'yyyy-MM-dd') as modify_datetime, cr.weather, ui.user_department, ui.user_position, ui.user_name
         from check_report cr
                  left join water_resources wr
                            on cr.facility_code = wr.facility_code
@@ -432,7 +432,7 @@
     </select>
     <select id="findCheckReportByFcCode" parameterType="checkReport" resultType="checkReport">
         select ROW_NUMBER() over() as rn,*
-        from ( select cr.doc_no,cr.facility_code,to_char(cr.modify_datetime, 'yyyy-MM-dd')as modify_datetime,cr.check_result,cr.spec_memo,code.cate_name,user_info.user_name
+        from ( select cr.doc_no,cr.facility_code,to_char(cr.check_date, 'yyyy-MM-dd')as modify_datetime,cr.check_result,cr.spec_memo,code.cate_name,user_info.user_name
                From check_report cr
                         left join water_resources wr
                                   on cr.facility_code = wr.facility_code

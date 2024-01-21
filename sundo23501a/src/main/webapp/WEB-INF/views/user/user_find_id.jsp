@@ -46,11 +46,11 @@
 				
 				<div class="form-floating">
 					<input type="text" class="form-control" name="user_name" placeholder="Name" value="${user_id}">
-					<label for="user_id">이름</label>
+					<label for="user_name">이름</label>
 				</div>
 				<div class="form-floating">
-					<input type="text" class="form-control" name="user_number" placeholder="010-xxxx-xxxx">
-					<label for="auth_email">핸드폰 번호</label>
+					<input type="text" class="form-control" name="user_tel" placeholder="010-xxxx-xxxx">
+					<label for="user_tel">핸드폰 번호</label>
 				</div>
 	
 				<div class="invalid-feedback" style="display:block">

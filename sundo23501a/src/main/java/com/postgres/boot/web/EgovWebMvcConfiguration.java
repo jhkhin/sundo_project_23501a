@@ -116,15 +116,19 @@ public class EgovWebMvcConfiguration extends WebMvcConfigurationSupport {
 
 				// Interceptor 적용하지 않음
 				.excludePathPatterns("/main_header", "/main_footer", "/org_intro", "/board_notice_list", "/board_notice_read"
-						, "/user_login", "/user_join_write", "/user_join_agree", "/user_find_pw"
+						, "/user_login", "/user_relogin", "/user_join_write", "/user_join_agree", "/user_find_pw"
 						, "/user_find_pw_new/**", "/user_find_id", "/user_find_id_result", "/user_find_pw_auth"
 						, "/send_save_mail", "/write_user_info", "/id_confirm", "/user_find_pw_update", "/user_login_check"
 						, "/bootstrap-5.3.2-examples/assets/dist/css/bootstrap.min.css"
+						, "/bootstrap-5.3.2-examples/assets/dist/css/bootstrap.min.css.map"
+						, "/bootstrap-5.3.2-dist/css/bootstrap.css.map"
 						, "/bootstrap-5.3.2-examples/css/sign-in.css"
 						, "/bootstrap-5.3.2-dist/css/bootstrap.css"
 						, "/css/egovframework/common.css"
 						, "/js/board.js"
 						, "/images/**"
+						, "/favicon.ico"
+						, "/error"
 				)
 		;
 

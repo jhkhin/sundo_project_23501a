@@ -3,13 +3,29 @@
 
 <mapper namespace="com.postgres.sample.service.impl.dao.map.MapDao">
     <select id="findObservationAll" parameterType="observation" resultType="observation">
-        select * from observation
-        order by observe_post
+        select * from water_gate
+        order by river_name
         offset #{start}-1 limit 10
     </select>
     <select id="CntObservationAll" resultType="observation">
-        select count(*) as total from observation
+        select count(*) as total from water_gate
     </select>
+
+
+    <select id="observationDetail" parameterType="observation" resultType="observation">
+
+        SELECT wl.hour_01 AS waterLevel_record, rf.hour_01 as rainfall_record,ob.*
+        FROM water_gate ob
+                 INNER JOIN water_level wl ON ob.river_code = wl.river_code
+                 INNER JOIN rainfall rf ON ob.river_code = rf.river_code
+--                  INNER JOIN flow ON ob.river_code = flow.river_code
+--         WHERE ob.river_code =  '1013655' , flow.december as flow_record ,ob.*
+        WHERE ob.river_code = #{river_code}
+        LIMIT 1
+    </select>
+
+
+
 
 
 

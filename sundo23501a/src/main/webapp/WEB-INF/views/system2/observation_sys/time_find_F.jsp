@@ -71,6 +71,19 @@ header {
 				$('#footer').html(data);
 			}
 		});
+		
+		
+		// 시자료 눌렀을때 시자료 페이지, 통계누르면 통계 페이지
+		$('select[name=selectType]').change(function(){
+			var type = $(this).val();
+			if(type == "hour") {
+				//시자료 hour
+				location.href = "/time_find_F?river_code="+$("#river_code").val();
+			}else{
+				//통계 statistics
+				$(location).attr("href", "/time_chart_list_F?river_code="+$("#river_code").val()+"&observe_year="+$("#year").val());
+			}
+		});
 	});
 
 </script>
@@ -79,8 +92,8 @@ header {
 
 	<header id="header"></header>
 	<div class="container">
-		<input type="hidden" name="river_code" value="${flowList.get(0).river_code}">
-		<input type="hidden" name="observe_year" value="${flowList.get(0).observe_year}">
+		<input type="hidden" name="river_code" id="river_code" value="${flowList.get(0).river_code}">
+		<input type="hidden" name="observe_year" id="observe_year" value="${flowList.get(0).observe_year}">
 
 		<div align="right" style="margin:10px 0px">
 			<button type="button" class="btn btn-secondary" onclick="location.href='observation_find'">
@@ -97,7 +110,7 @@ header {
 				<tr>
 					<th style="width:70px;text-align:right;font-weight:bold;">자료유형</th>
 					<td>
-						<select id="type" class="form-select" >
+						<select id="type" name="selectType" class="form-select" >
 							<option value="hour" selected="selected">시자료</option>
 							<option value="statistics">통계</option>
 						</select></td>
