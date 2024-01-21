@@ -152,10 +152,10 @@ th {
 									</c:if>
 									<c:if test="${observation.org_code != org.org_code}">
 										<option value="${org.org_code}">${org.org_name}</option>
-									</c:if>									
+									</c:if>
+									<input type="hidden" name="org_area" value="${org.org_area}">
 								</c:forEach>
 							</select>
-							<input type="hidden" name="org_area" value="${org.org_area}">
 						</td>
 					</tr>
 				</table>
